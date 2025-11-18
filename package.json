@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.90.10",
+    "@tanstack/react-table": "^8.21.3",
+    "antd": "^5.29.0",
     "jsonwebtoken": "^9.0.2",
     "next": "15.2.1",
     "react": "^19.0.0",
