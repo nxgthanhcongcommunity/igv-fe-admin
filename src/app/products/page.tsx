@@ -5,6 +5,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Table, Input, Spin, Tag, Button, Modal, Form, Select, message } from "antd";
 import { SearchOutlined, PlusOutlined, EditOutlined } from "@ant-design/icons";
 import { productService, Product } from "@/services/product-service";
+import { categoryService } from "@/services/category-service";
 
 export default function ProductsPage() {
     const [searchQuery, setSearchQuery] = useState("");
@@ -26,6 +27,12 @@ export default function ProductsPage() {
                 pageSize,
                 search: searchQuery,
             }),
+    });
+
+    // Fetch categories
+    const { data: categories = [] } = useQuery({
+        queryKey: ["categories"],
+        queryFn: () => categoryService.GetAll(),
     });
 
     const products = response?.items || [];
@@ -94,6 +101,11 @@ export default function ProductsPage() {
             });
         });
     };
+
+    const categoryOptions = categories.map((cat) => ({
+        label: cat.name,
+        value: cat.id,
+    }));
 
     const antdColumns = [
         {
@@ -271,7 +283,10 @@ export default function ProductsPage() {
                         name="category_id"
                         rules={[{ required: true, message: "Vui lòng chọn danh mục" }]}
                     >
-                        <Input type="number" />
+                        <Select
+                            placeholder="Chọn danh mục"
+                            options={categoryOptions}
+                        />
                     </Form.Item>
 
                     <Form.Item
@@ -365,7 +380,10 @@ export default function ProductsPage() {
                         name="category_id"
                         rules={[{ required: true, message: "Vui lòng chọn danh mục" }]}
                     >
-                        <Input type="number" />
+                        <Select
+                            placeholder="Chọn danh mục"
+                            options={categoryOptions}
+                        />
                     </Form.Item>
 
                     <Form.Item

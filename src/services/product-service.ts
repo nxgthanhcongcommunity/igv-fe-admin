@@ -116,6 +116,29 @@ class ProductService {
         const result: ApiResponse<Product> = await response.json();
         return result.data;
     }
+
+    // Replace FindByCode with a more flexible Find method
+    async Find(param: string | { code: string }): Promise<Product | null> {
+        const code = typeof param === "string" ? param : param?.code;
+        if (!code) return null;
+
+        const params = new URLSearchParams({ code });
+        const response = await fetch(
+            `${API_BASE_URL}/products/find?${params.toString()}`,
+            {
+                method: "GET",
+                headers: { accept: "*/*" },
+            }
+        );
+
+        if (response.status === 404) return null;
+        if (!response.ok) {
+            throw new Error(`Failed to find product: ${response.statusText}`);
+        }
+
+        const result: ApiResponse<Product> = await response.json();
+        return result?.data ?? null;
+    }
 }
 
 export const productService = new ProductService();

@@ -7,7 +7,9 @@ import { useUser } from "@/context/user-context";
 const menuItems = [
     { label: "Loại sản phẩm", href: "/product-types" },
     { label: "Sản phẩm", href: "/products" },
+    { label: "Hình ảnh sản phẩm", href: "/product-images" },
     { label: "Người dùng", href: "/users" },
+    { label: "Đơn hàng", href: "/orders" },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -29,8 +31,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
                                 <Link
                                     href={item.href}
                                     className={`block px-4 py-2 rounded transition ${pathname === item.href
-                                            ? "bg-blue-500 text-white"
-                                            : "text-gray-700 hover:bg-gray-100"
+                                        ? "bg-blue-500 text-white"
+                                        : "text-gray-700 hover:bg-gray-100"
                                         }`}
                                 >
                                     {item.label}
